@@ -1,0 +1,22 @@
+{
+  "name": "hl7-builder",
+  "version": "0.0.0",
+  "description": "Build an HL7 message through a library",
+  "main": "message.js",
+  "dependencies": {
+    "should": "~5.0.1"
+  },
+  "devDependencies": {
+    "mocha": "~2.1.0",
+    "should": "~5.0.1"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "hl7",
+    "builder"
+  ],
+  "author": "mking",
+  "license": "ISC"
+}
