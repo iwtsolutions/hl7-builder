@@ -70,22 +70,25 @@ module.exports = function (options) {
         segment.update(4, options.receivingApplication || '');
         segment.update(5, options.receivingFacility || '');
 
-        var d = new Date();
-        var datetime = d.getFullYear() + 
-            ('0' + (d.getMonth() + 1)).slice(-2) +
-            ('0' + d.getDate()).slice(-2) +
-            ('0' + d.getHours()).slice(-2) +
-            ('0' + d.getMinutes()).slice(-2);
-
-        segment.update(6, datetime);
+        segment.update(6, getTimestamp());
 
         var messageTypeField = new Field();
         messageTypeField.update(0, options.messageType);
         messageTypeField.update(1, options.messageEvent);
-        segment.update(8, messageTypeField);
 
+        segment.update(8, messageTypeField);
+        segment.update(9, options.messageId || '');
         segment.update(10, 'D');
-        segment.update(11, '2.3');
+        segment.update(11, options.version || '2.3');
         this.segments.push(segment);
+    }
+
+    function getTimestamp() {
+        var d = new Date();
+        return d.getFullYear() + 
+            ('0' + (d.getMonth() + 1)).slice(-2) +
+            ('0' + d.getDate()).slice(-2) +
+            ('0' + d.getHours()).slice(-2) +
+            ('0' + d.getMinutes()).slice(-2);
     }
 };

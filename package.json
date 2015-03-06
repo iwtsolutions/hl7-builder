@@ -1,7 +1,7 @@
 {
   "name": "hl7-builder",
-  "version": "0.0.0",
-  "description": "Build an HL7 message through a library",
+  "version": "0.1.0",
+  "description": "Build an HL7 message through a library.",
   "main": "app.js",
   "dependencies": {},
   "devDependencies": {
