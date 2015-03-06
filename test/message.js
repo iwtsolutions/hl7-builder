@@ -1,6 +1,7 @@
-var Message = require('../message');
-var Segment = require('../segment');
-var should = require('should');
+/*jshint expr: true*/
+require('should');
+var Segment = require('../builders/segment');
+var Message = require('../builders/message');
 
 describe('Message', function() {
     describe('new', function() {

@@ -2,10 +2,12 @@ var Segment = require('./segment');
 var Field = require('./field');
 
 module.exports = function (options) {
-    if (!options || typeof(options) != 'object')
+    if (!options || typeof options !== 'object') {
         throw new Error('Must define options.');
-    if (!options.messageType || !options.messageEvent)
+    }
+    if (!options.messageType || !options.messageEvent) {
         throw new Error('Must define message type and message event');
+    }
 
     options.delimiters = options.delimiters || {};
 
@@ -23,8 +25,9 @@ module.exports = function (options) {
     this.add = function(segment) {
         var segmentName = segment.fields[0].repeats[0][0];
 
-        if (segmentName === 'MSH')
+        if (segmentName === 'MSH') {
             throw new Error('Cannot add another message header. One is automatically added.');
+        }
 
         this.segments.push(segment);
     };

@@ -1,6 +1,6 @@
-var should = require('should');
-var Field = require('../field');
-var Segment = require('../segment');
+require('should');
+var Field = require('../builders/field');
+var Segment = require('../builders/segment');
 
 describe('Segment', function() {
     describe('update(location, field)', function() {
@@ -40,16 +40,16 @@ describe('Segment', function() {
     describe('new Segment(segmentName)', function() {
         it('should error without a segment name', function() {
             (function() {
-                var segment = new Segment();
+                new Segment();
             }).should.throw();
         });
 
         it('should error with a segment name shorter or longer than 3', function() {
             (function() {
-                var segment = new Segment('a');
+                new Segment('a');
             }).should.throw();
             (function() {
-                var segment = new Segment('aaaa');
+                new Segment('aaaa');
             }).should.throw();
         });
 

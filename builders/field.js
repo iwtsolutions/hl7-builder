@@ -3,9 +3,11 @@ module.exports = function(length) {
     this.repeats = [ new Array(length || 0) ];
 
     this.update = function(location, data) {
-        if (location > this.repeats[this.repeatIndex].length)
-            for (var i = this.repeats[this.repeatIndex].length; i < location; i++)
+        if (location > this.repeats[this.repeatIndex].length) {
+            for (var i = this.repeats[this.repeatIndex].length; i < location; i++) {
                 this.repeats[this.repeatIndex].push('');
+            }
+        }
 
         this.repeats[this.repeatIndex][location] = (data || '');
     };
