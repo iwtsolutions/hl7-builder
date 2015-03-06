@@ -13,6 +13,7 @@ module.exports = function (options) {
 
     this.segments = [];
     this.delimiters = {
+        segment: options.delimiters.segment || '\r',
         field: options.delimiters.field || '|',
         component: options.delimiters.component || '^',
         repeat: options.delimiters.repeat || '~',
@@ -39,7 +40,7 @@ module.exports = function (options) {
             segmentStrings.push(buildSegment.bind(this)(this.segments[i]));
         }
 
-        return segmentStrings.join('\r');
+        return segmentStrings.join(this.delimiters.segment);
     };
 
     function buildSegment(segment) {
