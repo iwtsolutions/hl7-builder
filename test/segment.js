@@ -27,6 +27,14 @@ describe('Segment', function() {
             segment.update(6, 'Value');
             segment.fields.length.should.equal(7);
         });
+
+        it('should add an object as a field that is not a Field object', function() {
+            var segment = new Segment('MSH');
+            var d = new Date();
+            segment.update(1, d);
+            segment.fields.length.should.equal(2);
+            segment.fields[1].repeats[0][0].should.equal(d);
+        });
     });
 
     describe('new Segment(segmentName)', function() {

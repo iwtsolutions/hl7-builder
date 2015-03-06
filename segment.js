@@ -17,7 +17,7 @@ module.exports = function(segmentName) {
                 this.fields.push(new Field(0));
 
         if (field) {
-            if (typeof(field) != 'object') {
+            if (typeof(field) != 'object' || typeof(field.repeat) == 'undefined') {
                 field = createFieldFromString(field);
             }
         }

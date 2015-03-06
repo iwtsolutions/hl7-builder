@@ -2,7 +2,11 @@ var Segment = require('./segment');
 var Field = require('./field');
 
 module.exports = function (options) {
-    options = options || { };
+    if (!options || typeof(options) != 'object')
+        throw new Error('Must define options.');
+    if (!options.messageType || !options.messageEvent)
+        throw new Error('Must define message type and message event');
+
     options.delimiters = options.delimiters || {};
 
     this.segments = [];
@@ -26,13 +30,13 @@ module.exports = function (options) {
     };
 
     this.toString = function() {
-        var result = '';
+        var segmentStrings = [];
 
         for (var i in this.segments) {
-            result += buildSegment.bind(this)(this.segments[i]);
+            segmentStrings.push(buildSegment.bind(this)(this.segments[i]));
         }
 
-        return result;
+        return segmentStrings.join('\r');
     };
 
     function buildSegment(segment) {
@@ -63,7 +67,13 @@ module.exports = function (options) {
         segment.update(5, options.receivingFacility || '');
 
         var d = new Date();
-        segment.update(6, d); // TODO
+        var datetime = d.getFullYear() + 
+            ('0' + (d.getMonth() + 1)).slice(-2) +
+            ('0' + d.getDate()).slice(-2) +
+            ('0' + d.getHours()).slice(-2) +
+            ('0' + d.getMinutes()).slice(-2);
+
+        segment.update(6, datetime);
 
         var messageTypeField = new Field();
         messageTypeField.update(0, options.messageType);
