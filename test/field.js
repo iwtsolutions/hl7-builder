@@ -1,5 +1,5 @@
-var should = require('should');
-var Field = require('../field');
+require('should');
+var Field = require('../builders/field');
 
 describe('Field', function() {
     describe('update(location, data)', function() {
