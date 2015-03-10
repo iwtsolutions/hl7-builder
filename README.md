@@ -51,3 +51,8 @@ Usage
     message.add(pid);
 
     console.log(message.toString());
+
+    // Create an L7 query object (see L7 documentation)
+    message = message.toQuery();
+
+    console.log(message.query('PID|3'));
