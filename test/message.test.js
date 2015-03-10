@@ -42,6 +42,17 @@ describe('Message', function() {
 
             message.segments[0].fields[6].repeats[0][0].should.startWith(date);
         });
+
+        it('should add an EVN segment if specified', function() {
+            var message = new Message({
+                messageType: 'ADT',
+                messageEvent: 'A01',
+                eventSegment: true
+            });
+
+            message.segments[0].fields[0].repeats[0][0].should.equal('MSH');
+            message.segments[1].fields[0].repeats[0][0].should.equal('EVN');
+        });
     });
 
     describe('toString()', function() {

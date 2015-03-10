@@ -12,6 +12,7 @@ Usage
     var message = new Builder.Message({
         messageType: 'ADT',     // Required
         messageEvent: 'A03',    // Required
+        eventSegment: true,
         delimiters: {
             segment: '\n'
             // field, component, repeat, escape, subComponent (unused)

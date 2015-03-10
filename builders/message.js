@@ -75,7 +75,8 @@ module.exports = function (options) {
         segment.update(4, options.receivingApplication || '');
         segment.update(5, options.receivingFacility || '');
 
-        segment.update(6, getTimestamp());
+        var timestamp = getTimestamp();
+        segment.update(6, timestamp);
 
         var messageTypeField = new Field();
         messageTypeField.update(0, options.messageType);
@@ -85,6 +86,17 @@ module.exports = function (options) {
         segment.update(9, options.messageId || '');
         segment.update(10, 'D');
         segment.update(11, options.version || '2.3');
+        this.segments.push(segment);
+
+        if (options.eventSegment === true) {
+            addEventSegment.bind(this)(options.messageEvent, options.timestamp);
+        }
+    }
+
+    function addEventSegment(event, timestamp) {
+        var segment = new Segment('EVN');
+        segment.update(1, event);
+        segment.update(2, timestamp);
         this.segments.push(segment);
     }
 
