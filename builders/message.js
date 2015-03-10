@@ -1,5 +1,6 @@
 var Segment = require('./segment');
 var Field = require('./field');
+var parser = require('L7');
 
 module.exports = function (options) {
     if (!options || typeof options !== 'object') {
@@ -41,6 +42,10 @@ module.exports = function (options) {
         }
 
         return segmentStrings.join(this.delimiters.segment);
+    };
+
+    this.toQuery = function() {
+        return parser.parse(this.toString());
     };
 
     function buildSegment(segment) {

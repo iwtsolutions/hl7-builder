@@ -106,4 +106,18 @@ describe('Message', function() {
             message.segments.length.should.equal(4);
         });
     });
+
+    describe('toQuery()', function() {
+        it('should return an L7 query object', function() {
+            var message = new Message({ messageType: 'ADT', messageEvent: 'A01'});
+            var segment = new Segment('EVN');
+            segment.update(1, 'test');
+            message.add(segment);
+
+            var result = message.toQuery();
+
+            result.should.be.type('object');
+            result.query('EVN|1').should.equal('test');
+        });
+    });
 });

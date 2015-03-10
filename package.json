@@ -1,9 +1,11 @@
 {
   "name": "hl7-builder",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Build an HL7 message through a library.",
   "main": "app.js",
-  "dependencies": {},
+  "dependencies": {
+    "L7": "~0.2.2"
+  },
   "devDependencies": {
     "mocha": "~2.1.0",
     "should": "~5.0.1",
