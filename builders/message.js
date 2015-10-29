@@ -1,6 +1,7 @@
 var Segment = require('./segment');
 var Field = require('./field');
 var parser = require('L7');
+var date = new Date();
 
 module.exports = function (options) {
     if (!options || typeof options !== 'object') {
@@ -101,11 +102,12 @@ module.exports = function (options) {
     }
 
     function getTimestamp() {
-        var d = new Date();
-        return d.getFullYear() + 
-            ('0' + (d.getMonth() + 1)).slice(-2) +
-            ('0' + d.getDate()).slice(-2) +
-            ('0' + d.getHours()).slice(-2) +
-            ('0' + d.getMinutes()).slice(-2);
+        date.setSeconds(date.getSeconds() + 10);
+
+        return date.getFullYear() + 
+            ('0' + (date.getMonth() + 1)).slice(-2) +
+            ('0' + date.getDate()).slice(-2) +
+            ('0' + date.getHours()).slice(-2) +
+            ('0' + date.getMinutes()).slice(-2);
     }
 };
