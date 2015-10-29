@@ -90,7 +90,7 @@ module.exports = function (options) {
         this.segments.push(segment);
 
         if (options.eventSegment === true) {
-            addEventSegment.bind(this)(options.messageEvent, options.timestamp);
+            addEventSegment.bind(this)(options.messageEvent, timestamp);
         }
     }
 
