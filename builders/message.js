@@ -102,7 +102,7 @@ module.exports = function (options) {
     }
 
     function getTimestamp() {
-        date.setSeconds(date.getSeconds() + 10);
+        date.setMinutes(date.getMinutes() + 2);
 
         return date.getFullYear() + 
             ('0' + (date.getMonth() + 1)).slice(-2) +
