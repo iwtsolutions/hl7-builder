@@ -1,17 +1,17 @@
 require('should');
 var Field = require('../builders/field');
 
-describe('Field', function() {
-    describe('update(location, data)', function() {
+describe('Field', function () {
+    describe('update(location, data)', function () {
         it('should add 3 empty components and a 4th field in one with add(4, "test"', function () {
             var field = new Field();
-            field.update(4, 'test'); // Ex: ^^^^test 
+            field.update(4, 'test'); // Ex: ^^^^test
 
             field.repeats[0].length.should.equal(5);
             field.repeats[0][4].should.equal('test');
         });
 
-        it('should update a 3rd component after adding 5', function() {
+        it('should update a 3rd component after adding 5', function () {
             var field = new Field();
             field.update(5);
             field.update(3, 'foo'); // Ex: ^^^foo^^
@@ -20,8 +20,8 @@ describe('Field', function() {
         });
     });
 
-    describe('repeat()', function() {
-        it('should create a repeated field with the same length of components.', function() {
+    describe('repeat()', function () {
+        it('should create a repeated field with the same length of components.', function () {
             var field = new Field();
             field.update(5);
             field.update(3, 'foo');

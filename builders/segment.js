@@ -1,19 +1,19 @@
 var Field = require('./field');
 
-module.exports = function(segmentName) {
+module.exports = function (segmentName) {
     this.fields = [];
-    
+
     if (!segmentName || segmentName.length !== 3) {
         throw new Error('Segment header must be set.');
     }
 
     this.fields.push(createFieldFromString(segmentName.toUpperCase()));
 
-    this.update = function(location, field) {
+    this.update = function (location, field) {
         if (location === 0) {
             throw new Error('Cannot set segment name through update.');
         }
-            
+
         if (location > this.fields.length) {
             for (var i = this.fields.length; i < location; i++) {
                 this.fields.push(new Field(0));
@@ -24,8 +24,7 @@ module.exports = function(segmentName) {
             if (typeof field !== 'object' || typeof field.repeat === 'undefined') {
                 field = createFieldFromString(field);
             }
-        }
-        else {
+        } else {
             field = new Field();
         }
 

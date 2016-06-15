@@ -1,7 +1,7 @@
 var Segment = require('./segment');
-var Field = require('./field');
-var parser = require('L7');
-var date = new Date();
+var Field   = require('./field');
+var parser  = require('L7');
+var date    = new Date();
 
 module.exports = function (options) {
     if (!options || typeof options !== 'object') {
@@ -25,7 +25,7 @@ module.exports = function (options) {
 
     addMessageHeader.bind(this)(options);
 
-    this.add = function(segment) {
+    this.add = function (segment) {
         var segmentName = segment.fields[0].repeats[0][0];
 
         if (segmentName === 'MSH') {
@@ -35,7 +35,7 @@ module.exports = function (options) {
         this.segments.push(segment);
     };
 
-    this.toString = function() {
+    this.toString = function () {
         var segmentStrings = [];
 
         for (var i in this.segments) {
@@ -45,7 +45,7 @@ module.exports = function (options) {
         return segmentStrings.join(this.delimiters.segment);
     };
 
-    this.toQuery = function() {
+    this.toQuery = function () {
         return parser.parse(this.toString());
     };
 
@@ -65,32 +65,32 @@ module.exports = function (options) {
         return fieldStrings.join(this.delimiters.repeat);
     }
 
-    function addMessageHeader(options) {
+    function addMessageHeader(headerOptions) {
         var segment = new Segment('MSH');
-        segment.update(1, this.delimiters.component + 
+        segment.update(1, this.delimiters.component +
             this.delimiters.repeat +
             this.delimiters.escape +
             this.delimiters.subComponent);
-        segment.update(2, options.sendingApplication || '');
-        segment.update(3, options.sendingFacility || '');
-        segment.update(4, options.receivingApplication || '');
-        segment.update(5, options.receivingFacility || '');
+        segment.update(2, headerOptions.sendingApplication || '');
+        segment.update(3, headerOptions.sendingFacility || '');
+        segment.update(4, headerOptions.receivingApplication || '');
+        segment.update(5, headerOptions.receivingFacility || '');
 
         var timestamp = getTimestamp();
         segment.update(6, timestamp);
 
         var messageTypeField = new Field();
-        messageTypeField.update(0, options.messageType);
-        messageTypeField.update(1, options.messageEvent);
+        messageTypeField.update(0, headerOptions.messageType);
+        messageTypeField.update(1, headerOptions.messageEvent);
 
         segment.update(8, messageTypeField);
-        segment.update(9, options.messageId || '');
+        segment.update(9, headerOptions.messageId || '');
         segment.update(10, 'D');
-        segment.update(11, options.version || '2.3');
+        segment.update(11, headerOptions.version || '2.3');
         this.segments.push(segment);
 
-        if (options.eventSegment === true) {
-            addEventSegment.bind(this)(options.messageEvent, timestamp);
+        if (headerOptions.eventSegment === true) {
+            addEventSegment.bind(this)(headerOptions.messageEvent, timestamp);
         }
     }
 
@@ -104,7 +104,7 @@ module.exports = function (options) {
     function getTimestamp() {
         date.setMinutes(date.getMinutes() + 2);
 
-        return date.getFullYear() + 
+        return date.getFullYear() +
             ('0' + (date.getMonth() + 1)).slice(-2) +
             ('0' + date.getDate()).slice(-2) +
             ('0' + date.getHours()).slice(-2) +

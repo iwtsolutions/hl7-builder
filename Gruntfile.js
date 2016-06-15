@@ -1,17 +1,11 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        jshint: {
-            files: [ 'app.js', 'test/**/*.js', 'builders/**/*.js' ],
+        eslint: {
             options: {
-                node: true,
-                indent: 4,
-                undef: true,
-                unused: true,
-                curly: true,
-                eqeqeq: true,
-                mocha: true
-            }
+                configFile: '.eslintrc.json'
+            },
+            target: '.'
         },
         mochaTest: {
             test: {
@@ -19,13 +13,16 @@ module.exports = function(grunt) {
                     reporter: 'spec',
                     require: 'should'
                 },
-                src: ['test/**/*.js' ]
+                src: [ 'test/**/*.js' ]
             }
         }
     });
 
+    grunt.loadNpmTasks('grunt-eslint');
     grunt.loadNpmTasks('grunt-mocha-test');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
+
+    grunt.registerTask('default', [ 'lint', 'mochaTest' ]);
+
+    grunt.registerTask('lint', 'eslint');
     grunt.registerTask('test', 'mochaTest');
-    grunt.registerTask('default', ['jshint', 'mochaTest' ]);
 };

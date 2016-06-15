@@ -1,17 +1,18 @@
 {
   "name": "hl7-builder",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Build an HL7 message through a library.",
   "main": "app.js",
   "dependencies": {
     "L7": "~0.2.2"
   },
   "devDependencies": {
-    "mocha": "~2.1.0",
-    "should": "~5.0.1",
+    "eslint-config-iwt": "github:iwtsolutions/eslint-config-iwt",
     "grunt": "^0.4.5",
-    "grunt-contrib-jshint": "^0.11.0",
-    "grunt-mocha-test": "^0.12.7"
+    "grunt-eslint": "^18.1.0",
+    "grunt-mocha-test": "^0.12.7",
+    "mocha": "~2.1.0",
+    "should": "~5.0.1"
   },
   "scripts": {
     "test": "grunt"
