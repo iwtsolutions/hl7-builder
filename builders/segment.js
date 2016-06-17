@@ -35,6 +35,14 @@ module.exports = function (segmentName) {
         }
     };
 
+    this.get = function (index, repeatDelimiter, componentDelimiter, subComponentDelimiter) {
+        if (index && index < this.fields.length) {
+            var field = this.fields[index];
+            return field.toString(repeatDelimiter, componentDelimiter, subComponentDelimiter);
+        }
+        return null;
+    };
+
     function createFieldFromString(fieldValue) {
         var field = new Field();
         field.update(0, fieldValue);

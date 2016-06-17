@@ -1,5 +1,5 @@
-require('should');
-var Field = require('../builders/field');
+var should  = require('should');
+var Field   = require('../builders/field');
 var Segment = require('../builders/segment');
 
 describe('Segment', function () {
@@ -50,6 +50,20 @@ describe('Segment', function () {
         it('should successfully create a header and capitalize it', function () {
             var segment = new Segment('msh');
             segment.fields[0].repeats[0][0].should.equal('MSH');
+        });
+    });
+    describe('get()', function () {
+        it('should get a field by an index', function () {
+            var segment = new Segment('MSH');
+            segment.update(6, 'Value');
+            segment.get(6).should.equal('Value');
+            segment.get(2).should.equal('');
+        });
+
+        it('should return null if an index is invalid', function () {
+            var segment = new Segment('MSH');
+            should.not.exist(segment.get(0));
+            should.not.exist(segment.get(45));
         });
     });
 });
