@@ -109,7 +109,7 @@ describe('Message', function () {
         it('should return an L7 query object', function () {
             var message = new Message({ messageType: 'ADT', messageEvent: 'A01' });
             var segment = new Segment('EVN');
-            segment.update(1, 'test');
+            segment.set(1, 'test');
             message.add(segment);
 
             var result = message.toQuery();

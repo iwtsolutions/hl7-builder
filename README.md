@@ -29,24 +29,24 @@ Usage
     var pid = new Builder.Segment('PID');
 
     // Add fields with a single component
-    pid.update(3, '234234');
-    pid.update(18, '55555');
+    pid.set(3, '234234');
+    pid.set(18, '55555');
 
     // Construct a field with multiple components
     var address = new Builder.Field();
-    address.update(0, '0000 main street');
-    address.update(2, 'Last Vegas');
-    address.update(3, 'NV');
-    address.update(4, '12345');
+    address.set(0, '0000 main street');
+    address.set(2, 'Last Vegas');
+    address.set(3, 'NV');
+    address.set(4, '12345');
 
     // Add a repeat inside a field
     address.repeat();
-    address.update(0, '1111 alternate street');
-    address.update(2, 'Last Vegas');
-    address.update(3, 'NV');
-    address.update(4, '12345');
+    address.set(0, '1111 alternate street');
+    address.set(2, 'Last Vegas');
+    address.set(3, 'NV');
+    address.set(4, '12345');
 
-    pid.update(11, address);
+    pid.set(11, address);
 
     // Append segments to the message
     message.add(pid);

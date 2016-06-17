@@ -9,9 +9,9 @@ module.exports = function (segmentName) {
 
     this.fields.push(createFieldFromString(segmentName.toUpperCase()));
 
-    this.update = function (location, field) {
+    this.set = function (location, field) {
         if (location === 0) {
-            throw new Error('Cannot set segment name through update.');
+            throw new Error('Cannot set segment name through set.');
         }
 
         if (location > this.fields.length) {
@@ -45,7 +45,7 @@ module.exports = function (segmentName) {
 
     function createFieldFromString(fieldValue) {
         var field = new Field();
-        field.update(0, fieldValue);
+        field.set(0, fieldValue);
         return field;
     }
 };

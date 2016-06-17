@@ -67,26 +67,26 @@ module.exports = function (options) {
 
     function addMessageHeader(headerOptions) {
         var segment = new Segment('MSH');
-        segment.update(1, this.delimiters.component +
+        segment.set(1, this.delimiters.component +
             this.delimiters.repeat +
             this.delimiters.escape +
             this.delimiters.subComponent);
-        segment.update(2, headerOptions.sendingApplication || '');
-        segment.update(3, headerOptions.sendingFacility || '');
-        segment.update(4, headerOptions.receivingApplication || '');
-        segment.update(5, headerOptions.receivingFacility || '');
+        segment.set(2, headerOptions.sendingApplication || '');
+        segment.set(3, headerOptions.sendingFacility || '');
+        segment.set(4, headerOptions.receivingApplication || '');
+        segment.set(5, headerOptions.receivingFacility || '');
 
         var timestamp = getTimestamp();
-        segment.update(6, timestamp);
+        segment.set(6, timestamp);
 
         var messageTypeField = new Field();
-        messageTypeField.update(0, headerOptions.messageType);
-        messageTypeField.update(1, headerOptions.messageEvent);
+        messageTypeField.set(0, headerOptions.messageType);
+        messageTypeField.set(1, headerOptions.messageEvent);
 
-        segment.update(8, messageTypeField);
-        segment.update(9, headerOptions.messageId || '');
-        segment.update(10, 'D');
-        segment.update(11, headerOptions.version || '2.3');
+        segment.set(8, messageTypeField);
+        segment.set(9, headerOptions.messageId || '');
+        segment.set(10, 'D');
+        segment.set(11, headerOptions.version || '2.3');
         this.segments.push(segment);
 
         if (headerOptions.eventSegment === true) {
@@ -96,8 +96,8 @@ module.exports = function (options) {
 
     function addEventSegment(event, timestamp) {
         var segment = new Segment('EVN');
-        segment.update(1, event);
-        segment.update(2, timestamp);
+        segment.set(1, event);
+        segment.set(2, timestamp);
         this.segments.push(segment);
     }
 

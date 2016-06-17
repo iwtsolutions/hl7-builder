@@ -3,20 +3,20 @@ var Field   = require('../builders/field');
 var Segment = require('../builders/segment');
 
 describe('Segment', function () {
-    describe('update(location, field)', function () {
+    describe('set(location, field)', function () {
         it('should add a field from a given field function', function () {
             var field = new Field();
-            field.update(0, 'value');
+            field.set(0, 'value');
 
             var segment = new Segment('MSH');
-            segment.update(1, field);
+            segment.set(1, field);
 
             segment.fields.length.should.equal(2);
         });
 
         it('should add a field from a given string', function () {
             var segment = new Segment('MSH');
-            segment.update(1, 'field');
+            segment.set(1, 'field');
 
             segment.fields.length.should.equal(2);
             segment.fields[1].repeats[0][0].should.equal('field');
@@ -24,14 +24,14 @@ describe('Segment', function () {
 
         it('should add a field at location 6 and add other fields before it', function () {
             var segment = new Segment('MSH');
-            segment.update(6, 'Value');
+            segment.set(6, 'Value');
             segment.fields.length.should.equal(7);
         });
 
         it('should add an object as a field that is not a Field object', function () {
             var segment = new Segment('MSH');
             var d = new Date();
-            segment.update(1, d);
+            segment.set(1, d);
             segment.fields.length.should.equal(2);
             segment.fields[1].repeats[0][0].should.equal(d);
         });
@@ -55,7 +55,7 @@ describe('Segment', function () {
     describe('get()', function () {
         it('should get a field by an index', function () {
             var segment = new Segment('MSH');
-            segment.update(6, 'Value');
+            segment.set(6, 'Value');
             segment.get(6).should.equal('Value');
             segment.get(2).should.equal('');
         });

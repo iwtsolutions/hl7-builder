@@ -2,7 +2,7 @@ module.exports = function (length) {
     this.repeatIndex = 0;
     this.repeats = [ new Array(length || 0) ];
 
-    this.update = function (location, data) {
+    this.set = function (location, data) {
         if (location > this.repeats[this.repeatIndex].length) {
             for (var i = this.repeats[this.repeatIndex].length; i < location; i++) {
                 this.repeats[this.repeatIndex].push('');

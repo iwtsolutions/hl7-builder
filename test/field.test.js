@@ -2,19 +2,19 @@ var should = require('should');
 var Field  = require('../builders/field');
 
 describe('Field', function () {
-    describe('update(location, data)', function () {
+    describe('set(location, data)', function () {
         it('should add 3 empty components and a 4th field in one with add(4, "test"', function () {
             var field = new Field();
-            field.update(4, 'test'); // Ex: ^^^^test
+            field.set(4, 'test'); // Ex: ^^^^test
 
             field.repeats[0].length.should.equal(5);
             field.repeats[0][4].should.equal('test');
         });
 
-        it('should update a 3rd component after adding 5', function () {
+        it('should set a 3rd component after adding 5', function () {
             var field = new Field();
-            field.update(5);
-            field.update(3, 'foo'); // Ex: ^^^foo^^
+            field.set(5);
+            field.set(3, 'foo'); // Ex: ^^^foo^^
 
             field.repeats[0][3].should.equal('foo');
         });
@@ -23,8 +23,8 @@ describe('Field', function () {
     describe('repeat()', function () {
         it('should create a repeated field with the same length of components.', function () {
             var field = new Field();
-            field.update(5);
-            field.update(3, 'foo');
+            field.set(5);
+            field.set(3, 'foo');
 
             field.repeat();
             field.repeatIndex.should.equal(1);
@@ -38,8 +38,8 @@ describe('Field', function () {
     describe('get()', function () {
         it('should get a field by an index', function () {
             var field = new Field();
-            field.update(5);
-            field.update(3, 'foo');
+            field.set(5);
+            field.set(3, 'foo');
 
             field.get(5).should.equal('');
             field.get(3).should.equal('foo');
@@ -47,11 +47,11 @@ describe('Field', function () {
 
         it('should get a component in a repeated field by an index and default repeat', function () {
             var field = new Field();
-            field.update(5);
-            field.update(3, 'foo');
+            field.set(5);
+            field.set(3, 'foo');
 
             field.repeat();
-            field.update(5, 'foo');
+            field.set(5, 'foo');
 
             field.get(3).should.equal('');
             field.get(5).should.equal('foo');
@@ -59,11 +59,11 @@ describe('Field', function () {
 
         it('should get a component in a repeated field by an index and repeat', function () {
             var field = new Field();
-            field.update(5);
-            field.update(3, 'bar2');
+            field.set(5);
+            field.set(3, 'bar2');
 
             field.repeat();
-            field.update(5, 'foo');
+            field.set(5, 'foo');
 
             field.get(3, 0).should.equal('bar2');
             field.get(3, 1).should.equal('');
@@ -81,30 +81,30 @@ describe('Field', function () {
     describe('toString()', function () {
         it('should print out a field as a string', function () {
             var field = new Field();
-            field.update(3, 'test');
-            field.update(5, '5rd');
+            field.set(3, 'test');
+            field.set(5, '5rd');
             field.toString().should.equal('^^^test^^5rd');
         });
 
         it('should print out a field with repeats as a string', function () {
             var field = new Field();
-            field.update(0, 'holiday');
-            field.update(2, 'christmas');
+            field.set(0, 'holiday');
+            field.set(2, 'christmas');
 
             field.repeat();
-            field.update(0, 'holiday');
-            field.update(2, '4st of july');
+            field.set(0, 'holiday');
+            field.set(2, '4st of july');
             field.toString().should.equal('holiday^^christmas~holiday^^4st of july');
         });
 
         it('should print out a field with repeats as a string with different delimiters', function () {
             var field = new Field();
-            field.update(0, 'day');
-            field.update(2, '17');
+            field.set(0, 'day');
+            field.set(2, '17');
 
             field.repeat();
-            field.update(0, 'day');
-            field.update(2, '21');
+            field.set(0, 'day');
+            field.set(2, '21');
             field.toString('!', ':').should.equal('day::17!day::21');
         });
     });
