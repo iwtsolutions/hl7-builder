@@ -52,6 +52,7 @@ describe('Segment', function () {
             segment.fields[0].repeats[0][0].should.equal('MSH');
         });
     });
+
     describe('get()', function () {
         it('should get a field by an index', function () {
             var segment = new Segment('MSH');
@@ -62,8 +63,27 @@ describe('Segment', function () {
 
         it('should return null if an index is invalid', function () {
             var segment = new Segment('MSH');
-            should.not.exist(segment.get(0));
             should.not.exist(segment.get(45));
         });
+    });
+
+    it('should return segment name on getName()', function () {
+        var segment = new Segment('AAA');
+        segment.getName().should.equal('AAA');
+
+        var segment2 = new Segment('BBB');
+        var field = new Field();
+        field.set(0, 'value');
+        field.repeat();
+        field.set(3, 'foo');
+
+        segment2.set(1, field);
+        segment2.set(6, 'Value');
+        segment2.getName().should.equal('BBB');
+    });
+
+    it('should capitalize segment name', function () {
+        var segment = new Segment('asd');
+        segment.getName().should.equal('ASD');
     });
 });

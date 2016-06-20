@@ -36,11 +36,15 @@ module.exports = function (segmentName) {
     };
 
     this.get = function (index, repeatDelimiter, componentDelimiter, subComponentDelimiter) {
-        if (index && index < this.fields.length) {
+        if (isNaN(index) === false && index < this.fields.length) {
             var field = this.fields[index];
             return field.toString(repeatDelimiter, componentDelimiter, subComponentDelimiter);
         }
         return null;
+    };
+
+    this.getName = function () {
+        return this.get(0);
     };
 
     function createFieldFromString(fieldValue) {

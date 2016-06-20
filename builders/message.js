@@ -1,7 +1,7 @@
+var date    = new Date();
+var parser  = require('L7');
 var Segment = require('./segment');
 var Field   = require('./field');
-var parser  = require('L7');
-var date    = new Date();
 
 module.exports = function (options) {
     if (!options || typeof options !== 'object') {
@@ -26,9 +26,7 @@ module.exports = function (options) {
     addMessageHeader.bind(this)(options);
 
     this.add = function (segment) {
-        var segmentName = segment.fields[0].repeats[0][0];
-
-        if (segmentName === 'MSH') {
+        if (segment.getName() === 'MSH') {
             throw new Error('Cannot add another message header. One is automatically added.');
         }
 
