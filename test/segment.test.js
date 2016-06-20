@@ -86,4 +86,43 @@ describe('Segment', function () {
         var segment = new Segment('asd');
         segment.getName().should.equal('ASD');
     });
+
+    it('should return a segment from toString()', function () {
+        var segment = new Segment('PID');
+        segment.set(1, 'T');
+        segment.set(2, 'foo');
+        segment.set(3, 'seg');
+
+        segment.toString().should.equal('PID|T|foo|seg');
+
+        segment = new Segment('PV1');
+        var field = new Field();
+        field.set(0, '1comp');
+        field.set(2, '2comp');
+        field.repeat();
+        field.set(0, '3comp');
+        field.set(2, '4');
+        segment.set(3, field);
+
+        segment.toString().should.equal('PV1|||1comp^^2comp~3comp^^4');
+    });
+
+    it('should return a segment from toString() with different delimiters', function () {
+        var segment = new Segment('PV1');
+        var field = new Field();
+        field.set(0, '1comp');
+        field.set(2, '2comp');
+        field.repeat();
+        field.set(0, '3comp');
+        field.set(2, '4');
+        segment.set(3, field);
+
+        var delimiters = {
+            field: ':',
+            repeat: '-',
+            component: '*',
+            subComponent: '$'
+        };
+        segment.toString(delimiters).should.equal('PV1:::1comp**2comp-3comp**4');
+    });
 });

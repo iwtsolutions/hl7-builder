@@ -37,7 +37,7 @@ module.exports = function (options) {
         var segmentStrings = [];
 
         for (var i in this.segments) {
-            segmentStrings.push(buildSegment.bind(this)(this.segments[i]));
+            segmentStrings.push(this.segments[i].toString(this.delimiters));
         }
 
         return segmentStrings.join(this.delimiters.segment);
@@ -46,22 +46,6 @@ module.exports = function (options) {
     this.toQuery = function () {
         return parser.parse(this.toString());
     };
-
-    function buildSegment(segment) {
-        var fieldList = [];
-        for (var i in segment.fields) {
-            fieldList.push(buildField.bind(this)(segment.fields[i]));
-        }
-        return fieldList.join(this.delimiters.field);
-    }
-
-    function buildField(field) {
-        var fieldStrings = [];
-        for (var repeat in field.repeats) {
-            fieldStrings.push(field.repeats[repeat].join(this.delimiters.component));
-        }
-        return fieldStrings.join(this.delimiters.repeat);
-    }
 
     function addMessageHeader(headerOptions) {
         var segment = new Segment('MSH');

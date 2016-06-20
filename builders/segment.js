@@ -47,6 +47,22 @@ module.exports = function (segmentName) {
         return this.get(0);
     };
 
+    this.toString = function (delimiters) {
+        delimiters = delimiters || { };
+
+        var fields = [];
+        this.fields.forEach(function (field) {
+            var fieldString = field.toString(
+                delimiters.repeat,
+                delimiters.component,
+                delimiters.subComponent);
+
+            fields.push(fieldString);
+        });
+
+        return fields.join(delimiters.field || '|');
+    };
+
     function createFieldFromString(fieldValue) {
         var field = new Field();
         field.set(0, fieldValue);
