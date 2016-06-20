@@ -1,22 +1,22 @@
-require('should');
-var Field = require('../builders/field');
+var should  = require('should');
+var Field   = require('../builders/field');
 var Segment = require('../builders/segment');
 
 describe('Segment', function () {
-    describe('update(location, field)', function () {
+    describe('set(location, field)', function () {
         it('should add a field from a given field function', function () {
             var field = new Field();
-            field.update(0, 'value');
+            field.set(0, 'value');
 
             var segment = new Segment('MSH');
-            segment.update(1, field);
+            segment.set(1, field);
 
             segment.fields.length.should.equal(2);
         });
 
         it('should add a field from a given string', function () {
             var segment = new Segment('MSH');
-            segment.update(1, 'field');
+            segment.set(1, 'field');
 
             segment.fields.length.should.equal(2);
             segment.fields[1].repeats[0][0].should.equal('field');
@@ -24,14 +24,14 @@ describe('Segment', function () {
 
         it('should add a field at location 6 and add other fields before it', function () {
             var segment = new Segment('MSH');
-            segment.update(6, 'Value');
+            segment.set(6, 'Value');
             segment.fields.length.should.equal(7);
         });
 
         it('should add an object as a field that is not a Field object', function () {
             var segment = new Segment('MSH');
             var d = new Date();
-            segment.update(1, d);
+            segment.set(1, d);
             segment.fields.length.should.equal(2);
             segment.fields[1].repeats[0][0].should.equal(d);
         });
@@ -51,5 +51,78 @@ describe('Segment', function () {
             var segment = new Segment('msh');
             segment.fields[0].repeats[0][0].should.equal('MSH');
         });
+    });
+
+    describe('get()', function () {
+        it('should get a field by an index', function () {
+            var segment = new Segment('MSH');
+            segment.set(6, 'Value');
+            segment.get(6).should.equal('Value');
+            segment.get(2).should.equal('');
+        });
+
+        it('should return null if an index is invalid', function () {
+            var segment = new Segment('MSH');
+            should.not.exist(segment.get(45));
+        });
+    });
+
+    it('should return segment name on getName()', function () {
+        var segment = new Segment('AAA');
+        segment.getName().should.equal('AAA');
+
+        var segment2 = new Segment('BBB');
+        var field = new Field();
+        field.set(0, 'value');
+        field.repeat();
+        field.set(3, 'foo');
+
+        segment2.set(1, field);
+        segment2.set(6, 'Value');
+        segment2.getName().should.equal('BBB');
+    });
+
+    it('should capitalize segment name', function () {
+        var segment = new Segment('asd');
+        segment.getName().should.equal('ASD');
+    });
+
+    it('should return a segment from toString()', function () {
+        var segment = new Segment('PID');
+        segment.set(1, 'T');
+        segment.set(2, 'foo');
+        segment.set(3, 'seg');
+
+        segment.toString().should.equal('PID|T|foo|seg');
+
+        segment = new Segment('PV1');
+        var field = new Field();
+        field.set(0, '1comp');
+        field.set(2, '2comp');
+        field.repeat();
+        field.set(0, '3comp');
+        field.set(2, '4');
+        segment.set(3, field);
+
+        segment.toString().should.equal('PV1|||1comp^^2comp~3comp^^4');
+    });
+
+    it('should return a segment from toString() with different delimiters', function () {
+        var segment = new Segment('PV1');
+        var field = new Field();
+        field.set(0, '1comp');
+        field.set(2, '2comp');
+        field.repeat();
+        field.set(0, '3comp');
+        field.set(2, '4');
+        segment.set(3, field);
+
+        var delimiters = {
+            field: ':',
+            repeat: '-',
+            component: '*',
+            subComponent: '$'
+        };
+        segment.toString(delimiters).should.equal('PV1:::1comp**2comp-3comp**4');
     });
 });

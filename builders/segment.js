@@ -9,9 +9,9 @@ module.exports = function (segmentName) {
 
     this.fields.push(createFieldFromString(segmentName.toUpperCase()));
 
-    this.update = function (location, field) {
+    this.set = function (location, field) {
         if (location === 0) {
-            throw new Error('Cannot set segment name through update.');
+            throw new Error('Cannot set segment name through set.');
         }
 
         if (location > this.fields.length) {
@@ -35,9 +35,37 @@ module.exports = function (segmentName) {
         }
     };
 
+    this.get = function (index, repeatDelimiter, componentDelimiter, subComponentDelimiter) {
+        if (isNaN(index) === false && index < this.fields.length) {
+            var field = this.fields[index];
+            return field.toString(repeatDelimiter, componentDelimiter, subComponentDelimiter);
+        }
+        return null;
+    };
+
+    this.getName = function () {
+        return this.get(0);
+    };
+
+    this.toString = function (delimiters) {
+        delimiters = delimiters || { };
+
+        var fields = [];
+        this.fields.forEach(function (field) {
+            var fieldString = field.toString(
+                delimiters.repeat,
+                delimiters.component,
+                delimiters.subComponent);
+
+            fields.push(fieldString);
+        });
+
+        return fields.join(delimiters.field || '|');
+    };
+
     function createFieldFromString(fieldValue) {
         var field = new Field();
-        field.update(0, fieldValue);
+        field.set(0, fieldValue);
         return field;
     }
 };
