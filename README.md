@@ -1,6 +1,9 @@
 HL7-Builder
 ===========
 
+[![Build Status](https://travis-ci.org/iwtsolutions/hl7-builder.svg?branch=master)](https://travis-ci.org/iwtsolutions/hl7-builder)
+[![Coverage Status](https://coveralls.io/repos/github/iwtsolutions/hl7-builder/badge.svg?branch=master)](https://coveralls.io/github/iwtsolutions/hl7-builder?branch=master)
+
 This is a simple HL7 builder.
 
 Usage
